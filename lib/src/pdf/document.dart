@@ -50,8 +50,8 @@ class PdfDocument {
     int? offset = startXref;
     var isNewest = true;
     while (offset != null) {
-      var section = _readSectionWithDeltaRetry(
-          bytes, offset, probeParser, headerDelta);
+      var section =
+          _readSectionWithDeltaRetry(bytes, offset, probeParser, headerDelta);
       if (!seenOffsets.add(offset)) {
         throw PdfParseException('cyclic /Prev chain in xref');
       }

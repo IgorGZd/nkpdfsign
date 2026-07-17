@@ -10,7 +10,8 @@ import '../exceptions.dart';
 
 /// Decodes [stream]'s data according to its /Filter and /DecodeParms.
 /// [resolve] follows indirect references inside the dict.
-Uint8List decodeStream(CosStream stream, CosObject? Function(CosObject?) resolve) {
+Uint8List decodeStream(
+    CosStream stream, CosObject? Function(CosObject?) resolve) {
   final dict = stream.dict;
   var data = stream.rawData;
 
@@ -77,7 +78,8 @@ Uint8List _applyPredictor(
   if (predictor == 2) {
     // TIFF predictor: horizontal differencing (8-bit components only).
     if (bpc != 8) {
-      throw UnsupportedPdfException('TIFF predictor with BitsPerComponent=$bpc');
+      throw UnsupportedPdfException(
+          'TIFF predictor with BitsPerComponent=$bpc');
     }
     final out = Uint8List.fromList(data);
     for (var r = 0; r + rowLength <= out.length; r += rowLength) {

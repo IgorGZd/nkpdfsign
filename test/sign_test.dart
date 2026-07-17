@@ -103,14 +103,20 @@ void main() {
           final content = BytesBuilder()
             ..add(signed.sublist(v[0], v[0] + v[1]))
             ..add(signed.sublist(v[2], v[2] + v[3]));
-          File('${dir.path}/content.bin')
-              .writeAsBytesSync(content.takeBytes());
+          File('${dir.path}/content.bin').writeAsBytesSync(content.takeBytes());
           final result = Process.runSync(openssl, [
-            'cms', '-verify',
-            '-in', '${dir.path}/sig.der', '-inform', 'DER',
-            '-content', '${dir.path}/content.bin',
-            '-binary', '-noverify',
-            '-out', '${dir.path}/out.bin',
+            'cms',
+            '-verify',
+            '-in',
+            '${dir.path}/sig.der',
+            '-inform',
+            'DER',
+            '-content',
+            '${dir.path}/content.bin',
+            '-binary',
+            '-noverify',
+            '-out',
+            '${dir.path}/out.bin',
           ]);
           expect(result.exitCode, 0, reason: 'openssl: ${result.stderr}');
         } finally {

@@ -37,11 +37,16 @@ bool isWhitespace(int b) =>
     b == 0x00 || b == 0x09 || b == 0x0a || b == 0x0c || b == 0x0d || b == 0x20;
 
 bool isDelimiter(int b) =>
-    b == 0x28 || b == 0x29 || // ( )
-    b == 0x3c || b == 0x3e || // < >
-    b == 0x5b || b == 0x5d || // [ ]
-    b == 0x7b || b == 0x7d || // { }
-    b == 0x2f || b == 0x25; // / %
+    b == 0x28 ||
+    b == 0x29 || // ( )
+    b == 0x3c ||
+    b == 0x3e || // < >
+    b == 0x5b ||
+    b == 0x5d || // [ ]
+    b == 0x7b ||
+    b == 0x7d || // { }
+    b == 0x2f ||
+    b == 0x25; // / %
 
 bool _isRegular(int b) => !isWhitespace(b) && !isDelimiter(b);
 
@@ -154,7 +159,8 @@ class Lexer {
     final s = sb.toString();
     final num value;
     if (isInt) {
-      value = int.tryParse(s) ?? (throw PdfParseException('bad number "$s" at $start'));
+      value = int.tryParse(s) ??
+          (throw PdfParseException('bad number "$s" at $start'));
     } else {
       // Accept forms like ".5", "4.", "-.7"
       value = double.tryParse(s.startsWith('.')
@@ -202,14 +208,38 @@ class Lexer {
         if (pos >= bytes.length) break;
         b = bytes[pos];
         switch (b) {
-          case 0x6e: out.addByte(0x0a); pos++; break; // \n
-          case 0x72: out.addByte(0x0d); pos++; break; // \r
-          case 0x74: out.addByte(0x09); pos++; break; // \t
-          case 0x62: out.addByte(0x08); pos++; break; // \b
-          case 0x66: out.addByte(0x0c); pos++; break; // \f
-          case 0x28: out.addByte(0x28); pos++; break; // \(
-          case 0x29: out.addByte(0x29); pos++; break; // \)
-          case 0x5c: out.addByte(0x5c); pos++; break; // \\
+          case 0x6e:
+            out.addByte(0x0a);
+            pos++;
+            break; // \n
+          case 0x72:
+            out.addByte(0x0d);
+            pos++;
+            break; // \r
+          case 0x74:
+            out.addByte(0x09);
+            pos++;
+            break; // \t
+          case 0x62:
+            out.addByte(0x08);
+            pos++;
+            break; // \b
+          case 0x66:
+            out.addByte(0x0c);
+            pos++;
+            break; // \f
+          case 0x28:
+            out.addByte(0x28);
+            pos++;
+            break; // \(
+          case 0x29:
+            out.addByte(0x29);
+            pos++;
+            break; // \)
+          case 0x5c:
+            out.addByte(0x5c);
+            pos++;
+            break; // \\
           case 0x0d: // line continuation
             pos++;
             if (pos < bytes.length && bytes[pos] == 0x0a) pos++;
@@ -222,8 +252,10 @@ class Lexer {
               // 1-3 octal digits
               var v = 0;
               var n = 0;
-              while (n < 3 && pos < bytes.length &&
-                  bytes[pos] >= 0x30 && bytes[pos] <= 0x37) {
+              while (n < 3 &&
+                  pos < bytes.length &&
+                  bytes[pos] >= 0x30 &&
+                  bytes[pos] <= 0x37) {
                 v = (v << 3) | (bytes[pos] - 0x30);
                 pos++;
                 n++;
@@ -278,6 +310,7 @@ class Lexer {
       }
       pos++;
     }
-    throw PdfParseException('unterminated hex string starting at offset $start');
+    throw PdfParseException(
+        'unterminated hex string starting at offset $start');
   }
 }

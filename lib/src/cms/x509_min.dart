@@ -23,7 +23,9 @@ Uint8List extractSerialNumberDer(Uint8List certificateDer) {
     throw SigningCredentialsException('certificate is not a SEQUENCE');
   }
   final tbs = top.elements![0];
-  if (tbs is! ASN1Sequence || tbs.elements == null || tbs.elements!.length < 2) {
+  if (tbs is! ASN1Sequence ||
+      tbs.elements == null ||
+      tbs.elements!.length < 2) {
     throw SigningCredentialsException('TBSCertificate is not a SEQUENCE');
   }
   final elements = tbs.elements!;

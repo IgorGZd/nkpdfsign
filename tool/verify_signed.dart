@@ -43,10 +43,18 @@ void main(List<String> args) {
       exit(0);
     }
     final r = Process.runSync(openssl, [
-      'cms', '-verify',
-      '-in', '${dir.path}/sig.der', '-inform', 'DER',
-      '-content', '${dir.path}/content.bin',
-      '-binary', '-noverify', '-out', '${dir.path}/out.bin',
+      'cms',
+      '-verify',
+      '-in',
+      '${dir.path}/sig.der',
+      '-inform',
+      'DER',
+      '-content',
+      '${dir.path}/content.bin',
+      '-binary',
+      '-noverify',
+      '-out',
+      '${dir.path}/out.bin',
     ]);
     print(r.exitCode == 0
         ? 'openssl: signature VALID'

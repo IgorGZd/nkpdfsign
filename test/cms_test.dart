@@ -23,8 +23,7 @@ final content = Uint8List.fromList(List.generate(1000, (i) => i % 251));
 
 void main() {
   setUpAll(() {
-    final bytes =
-        File('test/fixtures/test_signer.p12').readAsBytesSync();
+    final bytes = File('test/fixtures/test_signer.p12').readAsBytesSync();
     p12 = Pkcs12.load(bytes, 'test1234');
   });
 
@@ -100,7 +99,8 @@ void main() {
       final digestAlgs = signedData.elements![1] as ASN1Set;
       expect(digestAlgs.elements!.length, 1);
       final alg = digestAlgs.elements!.first as ASN1Sequence;
-      expect((alg.elements![0] as ASN1ObjectIdentifier).objectIdentifierAsString,
+      expect(
+          (alg.elements![0] as ASN1ObjectIdentifier).objectIdentifierAsString,
           oidSha256);
       expect(alg.elements!.length, 1, reason: 'sha256 params must be absent');
 
@@ -172,8 +172,8 @@ void main() {
       final top = ASN1Parser(cms).nextObject() as ASN1Sequence;
       final signedData =
           ASN1Parser(top.elements![1].valueBytes).nextObject() as ASN1Sequence;
-      final si = (signedData.elements![4] as ASN1Set).elements!.first
-          as ASN1Sequence;
+      final si =
+          (signedData.elements![4] as ASN1Set).elements!.first as ASN1Sequence;
       final signedAttrsDer = Uint8List.fromList(si.elements![3].encodedBytes!)
         ..[0] = 0x31;
       final signature = (si.elements![5] as ASN1OctetString).valueBytes!;
@@ -183,8 +183,7 @@ void main() {
           false,
           PublicKeyParameter<RSAPublicKey>(
               p12.certificate.publicKey as RSAPublicKey));
-      expect(
-          verifier.verifySignature(signedAttrsDer, RSASignature(signature)),
+      expect(verifier.verifySignature(signedAttrsDer, RSASignature(signature)),
           isTrue);
     });
 
@@ -200,14 +199,20 @@ void main() {
         final contentFile = File('${dir.path}/content.bin')
           ..writeAsBytesSync(content);
         final result = Process.runSync(openssl, [
-          'cms', '-verify',
-          '-in', cmsFile.path, '-inform', 'DER',
-          '-content', contentFile.path,
-          '-binary', '-noverify',
-          '-out', '${dir.path}/out.bin',
+          'cms',
+          '-verify',
+          '-in',
+          cmsFile.path,
+          '-inform',
+          'DER',
+          '-content',
+          contentFile.path,
+          '-binary',
+          '-noverify',
+          '-out',
+          '${dir.path}/out.bin',
         ]);
-        expect(result.exitCode, 0,
-            reason: 'openssl stderr: ${result.stderr}');
+        expect(result.exitCode, 0, reason: 'openssl stderr: ${result.stderr}');
       } finally {
         dir.deleteSync(recursive: true);
       }

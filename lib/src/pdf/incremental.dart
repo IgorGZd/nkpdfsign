@@ -9,7 +9,8 @@ import 'document.dart';
 import 'xref.dart';
 
 class IncrementalUpdater {
-  IncrementalUpdater(this.document) : _nextNumber = document.maxObjectNumber + 1;
+  IncrementalUpdater(this.document)
+      : _nextNumber = document.maxObjectNumber + 1;
 
   final PdfDocument document;
   int _nextNumber;
@@ -127,7 +128,12 @@ class IncrementalUpdater {
       for (final n in run) {
         final off = allOffsets[n]!;
         data.addByte(1);
-        data.add([(off >> 24) & 0xff, (off >> 16) & 0xff, (off >> 8) & 0xff, off & 0xff]);
+        data.add([
+          (off >> 24) & 0xff,
+          (off >> 16) & 0xff,
+          (off >> 8) & 0xff,
+          off & 0xff
+        ]);
         final gen = _generations[n] ?? 0;
         data.add([(gen >> 8) & 0xff, gen & 0xff]);
       }

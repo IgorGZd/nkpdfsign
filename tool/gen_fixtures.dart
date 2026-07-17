@@ -60,8 +60,7 @@ void genMinimalClassic() {
   b.endObj();
 
   b.beginObj(5);
-  b.addString(
-      '<</Type /Font /Subtype /Type1 /BaseFont /Helvetica>>\n');
+  b.addString('<</Type /Font /Subtype /Type1 /BaseFont /Helvetica>>\n');
   b.endObj();
 
   final xrefOffset = b.length;
@@ -70,7 +69,8 @@ void genMinimalClassic() {
   for (var i = 1; i <= 5; i++) {
     b.addString('${b.offsets[i]!.toString().padLeft(10, '0')} 00000 n \n');
   }
-  b.addString('trailer\n<</Size 6 /Root 1 0 R /ID [<0102030405060708090A0B0C0D0E0F10> <0102030405060708090A0B0C0D0E0F10>]>>\n');
+  b.addString(
+      'trailer\n<</Size 6 /Root 1 0 R /ID [<0102030405060708090A0B0C0D0E0F10> <0102030405060708090A0B0C0D0E0F10>]>>\n');
   b.addString('startxref\n$xrefOffset\n%%EOF\n');
 
   File('${fixtures.path}/minimal_classic.pdf').writeAsBytesSync(b.take());
@@ -128,8 +128,12 @@ void genXrefStream() {
   final xrefOffset = b.length;
   List<int> entry(int type, int a, int c) => [
         type,
-        (a >> 24) & 0xff, (a >> 16) & 0xff, (a >> 8) & 0xff, a & 0xff,
-        (c >> 8) & 0xff, c & 0xff,
+        (a >> 24) & 0xff,
+        (a >> 16) & 0xff,
+        (a >> 8) & 0xff,
+        a & 0xff,
+        (c >> 8) & 0xff,
+        c & 0xff,
       ];
   final rows = [
     entry(0, 0, 0xffff), // obj 0: free

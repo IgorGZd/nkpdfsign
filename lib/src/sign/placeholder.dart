@@ -37,8 +37,8 @@ PlaceholderResult addSignaturePlaceholder(
 
   final byteRangeRaw = CosRaw(Uint8List.fromList(
       latin1.encode('[0 9999999999 9999999999 9999999999]')));
-  final contentsRaw = CosRaw(Uint8List.fromList(
-      latin1.encode('<${'0' * (signatureSizeBytes * 2)}>')));
+  final contentsRaw = CosRaw(
+      Uint8List.fromList(latin1.encode('<${'0' * (signatureSizeBytes * 2)}>')));
 
   final sigDict = CosDict();
   sigDict['Type'] = const CosName('Sig');
@@ -62,8 +62,8 @@ PlaceholderResult addSignaturePlaceholder(
   widget['Type'] = const CosName('Annot');
   widget['Subtype'] = const CosName('Widget');
   widget['FT'] = const CosName('Sig');
-  widget['Rect'] = CosArray(
-      [CosNumber(0), CosNumber(0), CosNumber(0), CosNumber(0)]);
+  widget['Rect'] =
+      CosArray([CosNumber(0), CosNumber(0), CosNumber(0), CosNumber(0)]);
   widget['F'] = CosNumber(132);
   widget['T'] = _text(uniqueName);
   widget['V'] = sigRef;
@@ -174,7 +174,9 @@ String _uniqueFieldName(PdfDocument document, String base) {
       final field = document.resolve(f);
       if (field is! CosDict) continue;
       final t = field['T'];
-      if (t is CosString) existing.add(latin1.decode(t.bytes, allowInvalid: true));
+      if (t is CosString) {
+        existing.add(latin1.decode(t.bytes, allowInvalid: true));
+      }
       collect(field['Kids'], depth + 1);
     }
   }

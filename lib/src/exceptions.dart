@@ -20,7 +20,8 @@ class PdfParseException extends NkPdfSignException {
 /// documents requires crypt-filter support and is out of scope.
 class EncryptedPdfException extends NkPdfSignException {
   EncryptedPdfException([String? message])
-      : super(message ?? 'PDF is encrypted; signing encrypted documents is not supported');
+      : super(message ??
+            'PDF is encrypted; signing encrypted documents is not supported');
 }
 
 /// The PDF uses a feature this library does not support (e.g. an exotic

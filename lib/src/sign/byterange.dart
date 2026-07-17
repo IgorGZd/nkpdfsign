@@ -42,14 +42,20 @@ class SignatureSlots {
 /// space-padded to the exact placeholder length.
 void patchByteRange(Uint8List bytes, SignatureSlots slots) {
   final total = bytes.length;
-  final values = [0, slots.contentsStart, slots.contentsEnd, total - slots.contentsEnd];
+  final values = [
+    0,
+    slots.contentsStart,
+    slots.contentsEnd,
+    total - slots.contentsEnd
+  ];
   var s = '[${values.join(' ')}';
   if (s.length > slots.byteRangeLength - 1) {
     throw StateError('ByteRange does not fit its placeholder');
   }
   s = '${s.padRight(slots.byteRangeLength - 1)}]';
   final encoded = latin1.encode(s);
-  bytes.setRange(slots.byteRangeStart, slots.byteRangeStart + encoded.length, encoded);
+  bytes.setRange(
+      slots.byteRangeStart, slots.byteRangeStart + encoded.length, encoded);
 }
 
 /// The two spans covered by the signature: everything except `<...>`.

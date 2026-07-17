@@ -63,8 +63,8 @@ void main() {
     });
 
     test('dict with nested values', () {
-      final p = CosParser(
-          _ascii('<</A /B /C [1 2] /D <</E (x)>> /F true /G null>>'));
+      final p =
+          CosParser(_ascii('<</A /B /C [1 2] /D <</E (x)>> /F true /G null>>'));
       final d = p.parseValueAt(0) as CosDict;
       expect(d.nameOf('A'), 'B');
       expect((d['C'] as CosArray).length, 2);
@@ -74,14 +74,16 @@ void main() {
     });
 
     test('stream with direct /Length', () {
-      final src = _ascii('1 0 obj\n<</Length 5>>\nstream\nHELLO\nendstream\nendobj\n');
+      final src =
+          _ascii('1 0 obj\n<</Length 5>>\nstream\nHELLO\nendstream\nendobj\n');
       final obj = CosParser(src).parseIndirectObjectAt(0);
       final s = obj.value as CosStream;
       expect(String.fromCharCodes(s.rawData), 'HELLO');
     });
 
     test('stream with wrong /Length falls back to endstream scan', () {
-      final src = _ascii('1 0 obj\n<</Length 99>>\nstream\nHELLO\nendstream\nendobj\n');
+      final src =
+          _ascii('1 0 obj\n<</Length 99>>\nstream\nHELLO\nendstream\nendobj\n');
       final obj = CosParser(src).parseIndirectObjectAt(0);
       final s = obj.value as CosStream;
       expect(String.fromCharCodes(s.rawData), 'HELLO');
@@ -134,7 +136,8 @@ void main() {
       // Minimal classic fixture with /Encrypt spliced into the trailer.
       final src = latin1
           .decode(File('test/fixtures/minimal_classic.pdf').readAsBytesSync());
-      final tampered = src.replaceFirst('/Root 1 0 R', '/Root 1 0 R /Encrypt 9 0 R');
+      final tampered =
+          src.replaceFirst('/Root 1 0 R', '/Root 1 0 R /Encrypt 9 0 R');
       // The trailer moved; keep startxref valid by not shifting anything
       // before it — splice happens after the xref table, so offsets hold.
       expect(
