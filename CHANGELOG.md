@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1
+
+- `dart format` applied to the whole codebase (no functional changes).
+- Added GitHub Actions CI (analyze, format check, tests on Linux/Windows).
+
 ## 0.1.0
 
 - Initial release: PAdES-B-B (`/adbe.pkcs7.detached`) signing of existing
