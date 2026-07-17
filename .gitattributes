@@ -1,0 +1,6 @@
+# Byte-exact fixtures: any line-ending conversion breaks xref offsets.
+*.pdf binary
+*.p12 binary
+*.crt -text
+*.key -text
+*.sh text eol=lf

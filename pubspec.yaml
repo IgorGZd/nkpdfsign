@@ -1,0 +1,35 @@
+name: nkpdfsign
+description: >-
+  Pure Dart digital signing of existing PDF documents (PAdES-B-B,
+  adbe.pkcs7.detached) with incremental updates. Server-side, no native
+  dependencies.
+version: 0.1.0
+repository: https://github.com/IgorGZd/nkpdfsign
+issue_tracker: https://github.com/IgorGZd/nkpdfsign/issues
+
+topics:
+  - pdf
+  - digital-signature
+  - pades
+  - pkcs7
+  - cryptography
+
+environment:
+  sdk: ^3.3.0
+
+dependencies:
+  pointycastle: ^4.0.0
+  pkcs12_parser: ^1.0.0
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.6
+
+executables:
+  nkpdfsign:
+
+# Test-only certificates and keys, generated for the fixture corpus.
+false_secrets:
+  - /test/fixtures/ca.key
+  - /test/fixtures/leaf.key
+  - /test/fixtures/test_signer.p12

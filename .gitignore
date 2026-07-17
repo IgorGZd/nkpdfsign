@@ -1,0 +1,10 @@
+# https://dart.dev/tools/private-files
+# Created by `dart pub`
+.dart_tool/
+
+# IDE
+.idea/
+build/
+
+# Output of running example/nkpdfsign_example.dart
+signed_sample.pdf
